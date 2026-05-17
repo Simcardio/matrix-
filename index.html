@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+ <title>MATRIX MARKETS</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#07111f;
+  --card:#111827;
+  --card2:#182234;
+  --text:#ffffff;
+  --muted:#9ca3af;
+  --primary:#00ffd5;
+  --secondary:#7c3aed;
+  --danger:#ef4444;
+  --gold:#ffd700;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#020617,#0f172a,#111827);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:var(--primary);
+  border-radius:50px;
+}
+
+/* HEADER */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:999;
+  backdrop-filter:blur(20px);
+  background:rgba(10,15,30,.75);
+  border-bottom:1px solid rgba(255,255,255,.06);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:18px 40px;
+}
+
+.logo{
+  display:flex;
+  flex-direction:column;
+}
+
+.logo h1{
+  font-size:2rem;
+  color:var(--gold);
+  font-weight:800;
+  letter-spacing:2px;
+}
+
+.logo span{
+  color:var(--primary);
+  font-size:.8rem;
+  letter-spacing:4px;
+}
+
+.header-actions{
+  display:flex;
+  gap:15px;
+  align-items:center;
+}
+
+.header-btn{
+  background:linear-gradient(135deg,var(--primary),#00b4ff);
+  border:none;
+  color:#000;
+  padding:12px 18px;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+  box-shadow:var(--shadow);
+}
+
+.header-btn:hover{
+  transform:translateY(-4px) scale(1.04);
+}
+
+/* HERO */
+
+.hero{
+  padding:80px 30px 60px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero::before{
+  content:'';
+  position:absolute;
+  width:500px;
+  height:500px;
+  background:rgba(0,255,213,.15);
+  filter:blur(100px);
+  border-radius:50%;
+  top:-150px;
+  left:-100px;
+}
+
+.hero::after{
+  content:'';
+  position:absolute;
+  width:400px;
+  height:400px;
+  background:rgba(124,58,237,.2);
+  filter:blur(100px);
+  border-radius:50%;
+  right:-100px;
+  bottom:-100px;
+}
+
+.hero h5{
+  font-size:1.5rem;
+  font-weight:300;
+  margin-bottom:10px;
+  position:relative;
+  z-index:1;
+}
+
+.hero h5 span{
+  color:var(--primary);
+  margin-bottom:5px;
+}
+  h5 span{
+  
+  margin-top:2px;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:1.2rem;
+  margin-bottom:30px;
+  position:relative;
+  z-index:2;
+}
+
+.hero-buttons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  position:relative;
+  z-index:2;
+}
+
+.hero-buttons button{
+  padding:15px 25px;
+  border:none;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.primary-btn{
+  background:var(--primary);
+  color:#000;
+}
+
+.secondary-btn{
+  background:transparent;
+  border:2px solid var(--primary)!important;
+  color:var(--primary);
+}
+
+.hero-buttons button:hover{
+  transform:translateY(-5px);
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  padding:0 40px 40px;
+}
+
+.stat{
+  background:rgba(255,255,255,.05);
+  padding:30px;
+  border-radius:24px;
+  text-align:center;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.stat h3{
+  color:var(--primary);
+  font-size:2rem;
+}
+
+/* SEARCH */
+
+.search-wrapper{
+  padding:20px 40px;
+}
+
+.search-box{
+  display:flex;
+  gap:15px;
+  background:rgba(255,255,255,.05);
+  padding:15px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.search-box input{
+  flex:1;
+  background:transparent;
+  border:none;
+  color:#fff;
+  font-size:1rem;
+  outline:none;
+}
+
+.search-box button{
+  background:var(--primary);
+  border:none;
+  padding:12px 20px;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* CATEGORIES */
+
+.categories{
+  display:flex;
+  gap:12px;
+  padding:20px 40px;
+  overflow-x:auto;
+  scroll-behavior: smooth; /* Enables smooth scrolling */
+  -webkit-overflow-scrolling: touch; /* Enables momentum scrolling on iOS */
+  scrollbar-width: thin; /* Firefox scrollbar style */
+  scrollbar-color: var(--primary) transparent; /* Firefox scrollbar color */
+
+}
+
+.category{
+  background:rgba(255,255,255,.06);
+  padding:12px 20px;
+  border-radius:50px;
+  white-space:nowrap;
+  cursor:pointer;
+  transition:.3s;
+  border:1px solid transparent;
+}
+  .categories {
+  margin-top: 3px; /* or padding-top */
+}
+  
+
+.category:hover,
+.category.active{
+  background:var(--primary);
+  color:#000;
+  font-weight:700;
+}
+  
+ 
+
+/* PRODUCTS */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:25px;
+  padding:30px 40px 100px;
+}
+
+.product{
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  border-radius:28px;
+  overflow:hidden;
+  position:relative;
+  transition:.4s;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.product:hover{
+  transform:translateY(-10px);
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
+}
+
+.product img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+}
+
+.product-content{
+  padding:20px;
+}
+
+.badges{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+
+.badge{
+  padding:6px 12px;
+  border-radius:50px;
+  font-size:.7rem;
+  font-weight:700;
+}
+
+.trending{
+  background:#ff5722;
+}
+
+.new{
+  background:#00c853;
+}
+
+.hot{
+  background:#7c3aed;
+}
+
+.product h3{
+  margin:12px 0;
+  font-size:1.3rem;
+}
+
+.price{
+  color:var(--primary);
+  font-size:1.4rem;
+  font-weight:700;
+}
+
+.meta{
+  color:var(--muted);
+  margin:12px 0;
+  font-size:.9rem;
+}
+
+.product-actions{
+  display:flex;
+  gap:12px;
+  margin-top:18px;
+}
+
+.product-actions button{
+  flex:1;
+  border:none;
+  padding:12px;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.cart-btn{
+  background:var(--primary);
+  color:#000;
+}
+
+.wishlist-btn{
+  background:#ff2e63;
+  color:#fff;
+}
+
+.product-actions button:hover{
+  transform:scale(1.04);
+}
+
+/* FLOATING CART */
+
+.floating-cart{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:var(--primary);
+  color:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.6rem;
+  font-weight:800;
+  cursor:pointer;
+  z-index:999;
+  box-shadow:0 10px 30px rgba(0,255,213,.4);
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+}
+
+.modal-content{
+  width:95%;
+  max-width:600px;
+  background:var(--card);
+  border-radius:30px;
+  padding:30px;
+  max-height:90vh;
+  overflow-y:auto;
+}
+
+.modal-content h2{
+  margin-bottom:20px;
+}
+
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.cart-item button{
+  background:var(--danger);
+  border:none;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.total{
+  margin-top:25px;
+  font-size:1.4rem;
+  font-weight:700;
+  color:var(--primary);
+}
+
+.checkout-btn{
+  width:100%;
+  margin-top:20px;
+  padding:15px;
+  border:none;
+  border-radius:18px;
+  background:var(--primary);
+  color:#000;
+  font-weight:800;
+  cursor:pointer;
+}
+
+/* UPLOAD */
+
+.upload-section{
+  padding:40px;
+}
+
+.upload-box{
+  background:rgba(255,255,255,.05);
+  border-radius:30px;
+  padding:30px;
+}
+
+.upload-box h2{
+  margin-bottom:25px;
+}
+
+.form-group{
+  margin-bottom:;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:10px;
+  font-weight:600;
+}
+
+.form-group input,
+.form-group select{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:14px;
+  background:#0f172a;
+  color:#fff;
+}
+
+.submit-btn{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--primary),#00b4ff);
+  color:#000;
+  font-weight:800;
+  cursor:pointer;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  top:30px;
+  right:30px;
+  background:var(--primary);
+  color:#000;
+  padding:18px 24px;
+  border-radius:18px;
+  font-weight:700;
+  z-index:9999;
+  animation:slideIn .4s ease;
+}
+
+@keyframes slideIn{
+  from{
+    transform:translateX(100px);
+    opacity:0;
+  }
+  to{
+    transform:translateX(0);
+    opacity:1;
+  }
+}
+
+/* FOOTER */
+
+footer{
+  padding:40px;
+  text-align:center;
+  color:var(--muted);
+  border-top:1px solid rgba(255,255,255,.05);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.hero h2{
+  font-size:2.5rem;
+}
+
+header{
+  padding:15px;
+}
+
+.products{
+  padding:20px;
+}
+/* =========================
+   GLOBAL STABILITY PATCH
+========================= */
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Prevent layout breaking on zoom / TV */
+body {
+  min-width: 320px;
+}
+
+/* Safe image scaling everywhere */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Fix product card consistency */
+.product img {
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+}
+
+/* Better touch experience */
+button, .category {
+  touch-action: manipulation;
+}
+
+/* FIX MODAL SCROLL ON MOBILE */
+.modal-content {
+  overscroll-behavior: contain;
+}
+
+/* Prevent header breaking on small screens */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .header-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* Better product grid on tablets */
+@media (max-width: 900px) {
+  .products {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+  .modal {
+  padding: 20px;
+}
+  .upload-section {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -150%);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  z-index: 10000;
+  background: var(--card);
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  pointer-events: none; /* Prevent interaction when hidden */
+}
+
+.upload-section.active {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  pointer-events: auto; /* Enable interaction when visible */
+}
+  .hidden {
+  display: none;
+}
+
+#profileForm {
+  position: absolute;
+  top: 130px; /* adjust as needed */
+  left: 50px;
+  background:linear-gradient(135deg,#00072a,#00172a,var(--primary));
+  border: 1px solid #ccc;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 300px;
+  height:350px;
+  z-index: 10;
+
+  }
+  #profileForm input{
+    width:250px;
+    height:50px;
+    background:white;
+    color:black;
+    margin-top:35px;
+    font-size:1rem;
+  }
+  #profileForm button{ 
+    height:35px;
+    width:55px;
+    padding:5px 0;
+    gap:15px;
+    margin-top:15px;
+    font-weight:bold;
+  }
+  .three-dots-btn {
+  background: white;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 45px;
+  height: 50px;
+  padding: 0;
+}
+
+
+  #stores {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  gap: 12px;
+  padding: 20px 40px;
+  border: 1px solid #444; /* for debug */
+  max-width: 100%; /* ensure container width */
+}
+#next-page{
+  position:relative;
+  margin-left:280px;
+  top:-15px;
+  width:55px;
+  height:35px;
+  border:1px solid black;
+  border-radius:20px;
+  background:var(--primary);
+  font-weight:bold;
+   
+}
+.hidden {
+  display: none;
+}
+
+#menuOptions {
+  background: white;
+  color: black;
+  padding:20px;
+  width: 180px;
+  border-radius: 12px;
+  margin-top:-15px;
+  margin-left:150px;
+}
+
+.option {
+  padding: 12px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: rgba(255,255,255,0.1);
+}
+  .view{
+    display:none;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<div class="logo">
+<h1>MATRIX</h1>
+<span>MARKETS</span>
+</div>
+
+  <button id = "next-page">more</button>   
+  <div id="menuOptions" class="hidden">
+    
+    <div id = "matrix-ads" class="option" data-next="matrix-ads.html">
+    <label>Advetise</label>
+    </div>
+    
+     <div class="option" data-next="page2.html">
+    <label>Create Group</label>
+  </div>
+    
+  <div class="option" data-next="page3.html">
+    <label>Settings</label>
+  </div>
+</div>
+  
+  
+<div class="header-actions">
+
+<button class="header-btn" id="themeBtn">
+🌙
+</button>
+
+<button class="header-btn">
+❤️ Wishlist
+</button>
+
+<button class="header-btn" id = "header-btn">
+👤 Profile
+  </button>
+  <div id="profileForm" class="hidden">
+  <form>
+    <label for="name"></label>
+    <input type="text" id="name" name="name" placeholder="User Name " required />
+
+    <label for="email"></label>
+    <input type="email" id="email" name="email" placeholder="Email address" required />
+
+    <label for="password"></label>
+    <input type="password" id="password" name="password" placeholder="Enter Password" required  />
+
+    <button type="submit">Save</button>
+    <button type="button" id="closeFormBtn">Close</button>
+  </form>
+</div>
+</div>
+
+  
+  
+  
+</header>
+    
+  
+<section class="search-wrapper">
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search products, categories, brands...">
+<button id="searchBtn">
+Search
+</button>
+</div>
+
+</section>
+
+  <div class="categories" id="categories"></div>    
+  
+<section class="hero">
+
+  <h5><span>Available Stores</span></h5>
+<div style="display: flex; align-items: center; gap: 10px;">
+  <button id="scrollLeft" aria-label="Scroll stores left">◀</button>
+  <div id="stores" class="categories" style="flex: 1; overflow-x: auto; white-space: nowrap;"></div>
+  <button id="scrollRight" aria-label="Scroll stores right">▶</button>
+</div>
+  
+  
+<section class="products" id="products"></section>
+
+<div class="hero-buttons">
+<button class="primary-btn">
+🔥 Explore Market
+</button>
+
+<button class="secondary-btn">
+🚀 Start Selling
+</button>
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<h3>12K+</h3>
+<p>Active Buyers</p>
+</div>
+
+<div class="stat">
+<h3>4.9★</h3>
+<p>Marketplace Rating</p>
+</div>
+
+<div class="stat">
+<h3>50K+</h3>
+<p>Products Sold</p>
+</div>
+
+<div class="stat">
+<h3>24/7</h3>
+<p>Secure Payments</p>
+</div>
+
+</section>
+
+
+
+<section class="upload-section">
+
+<div class="upload-box">
+
+<h2>🚀 Sell Your Product</h2>
+
+<form id="uploadForm">
+
+
+
+<div class="form-group">
+<label>Category</label>
+
+<select id="productCategory">
+  
+<option placeholder ="Find Buyer" ></option>
+<option>Eletronics</option>
+<option>Gaming</option>
+<option>Fashion</option>
+<option>Luxury</option>
+<option>Vehicles</option>
+<option>Real Estate</option>
+<option>Property</option>
+<option>Sport clothing</option>
+<option>Resource</option>
+
+</select>
+</div>
+
+<div class="form-group">
+<label>Price</label>
+<input type="number" id="productPrice" required>
+</div>
+
+<div class="form-group">
+<label>Upload Image</label>
+<input type="file" id="productImage" accept="image/*" required>
+</div>
+
+<button class="submit-btn">
+Add Product
+</button>
+
+</form>
+
+</div>
+   <button id="closeUpload" style="position:absolute; top:15px; right:15px; font-size:1.5rem; background:none; border:none; color:#fff; cursor:pointer;">×</button>
+
+</section>
+
+<!-- CART -->
+
+<div class="floating-cart" id="cartBtn">
+🛒
+<span id="cartCount">0</span>
+</div>
+
+<div class="modal" id="cartModal">
+
+<div class="modal-content">
+
+<h2>Your Cart</h2>
+
+<div id="cartItems"></div>
+
+<div class="total">
+Total: $<span id="cartTotal">0</span>
+</div>
+
+<button class="checkout-btn" id="checkoutBtn">
+💳 Secure Checkout
+</button>
+
+</div>
+
+</div>
+
+<footer>
+
+<p>
+© 2026 MATRIX MARKETS — The Future Marketplace
+</p>
+
+</footer>
+
+<script>
+
+/* ==========================
+   DATA
+========================== */
+
+const categories = [
+"All",
+"Eletronics",
+"Gaming ",
+"Fashion",
+"Luxury",
+"Vehicles",
+"Real Estate",
+"Properties",
+"Sports",
+"Entertainment",
+"Resources",
+"Market Trends",
+"Health & Beauty",
+"Animals",
+"News"
+];
+
+let products = JSON.parse(localStorage.getItem('matrix_products')) || [
+
+{
+id:1,
+name:"iPhone Ultra",
+category:"Phones",
+price:1499,
+image:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200",
+badge:"🔥 Trending",
+rating:"4.9",
+sales:"12k"
+},
+
+{
+id:2,
+name:"Gaming Beast PC",
+category:"Gaming",
+price:3200,
+image:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=1200",
+badge:"⚡ Hot",
+rating:"5.0",
+sales:"8k"
+},
+
+{
+id:3,
+name:"Luxury Watch",
+category:"Luxury",
+price:999,
+image:"https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200",
+badge:"💎 Premium",
+rating:"4.8",
+sales:"4k"
+}
+
+];
+
+let cart = JSON.parse(localStorage.getItem('matrix_cart')) || [];
+
+/* ==========================
+   DOM
+========================== */
+
+const productsContainer = document.getElementById('products');
+const categoriesContainer = document.getElementById('categories');
+const searchInput = document.getElementById('searchInput');
+
+const cartBtn = document.getElementById('cartBtn');
+const cartModal = document.getElementById('cartModal');
+const cartItems = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+const cartCount = document.getElementById('cartCount');
+const storesSection = document.getElementById("stores");
+/* ==========================
+   TOAST
+========================== */
+
+function showToast(message){
+
+const toast = document.createElement('div');
+
+toast.className = 'toast';
+
+toast.innerText = message;
+
+document.body.appendChild(toast);
+
+setTimeout(()=>{
+toast.remove();
+},3000);
+
+}
+
+/* ==========================
+   SAVE
+========================== */
+
+function saveData(){
+
+localStorage.setItem(
+'matrix_products',
+JSON.stringify(products)
+);
+
+localStorage.setItem(
+'matrix_cart',
+JSON.stringify(cart)
+);
+
+}
+
+/* ==========================
+   RENDER CATEGORIES
+========================== */
+
+function renderCategories(){
+
+categoriesContainer.innerHTML = '';
+
+categories.forEach((category, index)=>{
+const div = document.createElement('div');
+
+div.className = 'category';
+
+div.innerText = category;
+
+div.onclick = ()=>{
+
+document
+.querySelectorAll('.category')
+.forEach(c=>c.classList.remove('active'));
+
+div.classList.add('active');
+  
+if(index === 0){
+  div.classList.add('active');
+}
+if(category === 'All'){
+renderProducts(products);
+}
+else{
+renderProducts(
+products.filter(
+p=>p.category === category
+)
+);
+}
+
+};
+
+categoriesContainer.appendChild(div);
+
+});
+   
+}
+
+/* ==========================
+   RENDER PRODUCTS
+========================== */
+
+function renderProducts(productArray){
+
+productsContainer.innerHTML = '';
+
+productArray.forEach(product=>{
+
+const card = document.createElement('div');
+
+card.className = 'product';
+
+card.innerHTML = `
+
+<img src="${product.image}">
+
+<div class="product-content">
+
+<div class="badges">
+<span class="badge trending">
+${product.badge}
+</span>
+</div>
+
+<h3>${product.name}</h3>
+
+<div class="price">
+$${product.price}
+</div>
+
+<div class="meta">
+⭐ ${product.rating} • ${product.sales} sales
+</div>
+
+<div class="meta">
+👁 12 people viewing now
+</div>
+
+<div class="product-actions">
+
+<button class="cart-btn"
+onclick="addToCart(${product.id})">
+Add To Cart
+</button>
+
+<button class="wishlist-btn"
+onclick="wishlist()">
+❤️
+</button>
+
+</div>
+
+</div>
+
+`;
+
+productsContainer.appendChild(card);
+
+});
+
+}
+
+/* ==========================
+   CART
+========================== */
+
+function addToCart(id){
+
+const product = products.find(p=>p.id===id);
+
+if(!product){
+  showToast("Product not found");
+  return;
+}
+
+cart.push(product);
+
+saveData();
+
+updateCart();
+
+showToast(`${product.name} added to cart 🛒`);
+}
+
+function updateCart(){
+
+cartItems.innerHTML = '';
+
+let total = 0;
+
+if(!cart) cart = [];
+
+cart.forEach((item,index)=>{
+
+total += item.price;
+
+const div = document.createElement('div');
+
+div.className = 'cart-item';
+
+div.innerHTML = `
+
+<div>
+${item.name}
+</div>
+
+<div>
+
+$${item.price}
+
+<button onclick="removeCart(${index})">
+X
+</button>
+
+</div>
+
+`;
+
+cartItems.appendChild(div);
+
+});
+
+cartTotal.innerText = total.toFixed(2);
+
+cartCount.innerText = cart.length;
+
+}
+
+function removeCart(index){
+
+cart.splice(index,1);
+
+saveData();
+
+updateCart();
+
+showToast('Item removed');
+
+}
+
+/* ==========================
+   SEARCH
+========================== */
+
+function searchProducts(){
+
+const value = searchInput.value.toLowerCase();
+
+const filtered = products.filter(product=>
+
+product.name.toLowerCase().includes(value)
+||
+product.category.toLowerCase().includes(value)
+
+);
+
+renderProducts(filtered);
+
+}
+
+document
+.getElementById('searchBtn')
+.addEventListener('click',searchProducts);
+
+searchInput.addEventListener(
+'input',
+searchProducts
+);
+
+/* ==========================
+   UPLOAD PRODUCT
+========================== */
+
+document
+.getElementById('uploadForm')
+.addEventListener('submit',e=>{
+
+e.preventDefault();
+
+const name =
+document.getElementById('productName').value;
+
+const category =
+document.getElementById('productCategory').value;
+
+const price =
+document.getElementById('productPrice').value;
+
+const imageInput =
+document.getElementById('productImage');
+
+const file = imageInput.files[0];
+
+if(!file){
+showToast('Please upload image');
+return;
+}
+
+const reader = new FileReader();
+
+reader.onload = function(event){
+
+const newProduct = {
+
+id:Date.now(),
+
+name,
+
+category,
+
+price:Number(price),
+
+image:event.target.result,
+
+badge:"🆕 New",
+
+rating:"5.0",
+
+sales:"0"
+
+};
+
+products.unshift(newProduct);
+
+saveData();
+
+renderProducts(products);
+
+showToast('🚀 Product Uploaded');
+
+document.getElementById('uploadForm').reset();
+
+};
+
+reader.readAsDataURL(file);
+
+});
+  
+    
+/* ==========================
+   WISHLIST
+========================== */
+
+function wishlist(){
+
+showToast('❤️ Added to wishlist');
+
+}
+
+/* ==========================
+   CART MODAL
+========================== */
+
+cartBtn.onclick = ()=>{
+
+cartModal.style.display = 'flex';
+
+};
+
+cartModal.onclick = e=>{
+
+if(e.target === cartModal){
+
+cartModal.style.display = 'none';
+
+}
+
+};
+
+/* ==========================
+   CHECKOUT
+========================== */
+
+document
+.getElementById('checkoutBtn')
+.onclick = ()=>{
+
+if(cart.length === 0){
+
+showToast('Cart is empty');
+
+return;
+
+}
+
+showToast('💳 Payment Successful');
+
+cart = [];
+
+saveData();
+
+updateCart();
+
+cartModal.style.display = 'none';
+
+};
+
+/* ==========================
+   DARK MODE
+========================== */
+
+let dark = true;
+
+document
+.getElementById('themeBtn')
+.onclick = ()=>{
+
+dark = !dark;
+
+if(!dark){
+
+document.documentElement.style.setProperty(
+'--bg',
+'#ffffff'
+);
+
+document.body.style.background =
+'#f3f4f6';
+
+document.documentElement.style.setProperty(
+'--text',
+'#111827'
+);
+
+showToast('☀ Light Mode');
+
+}
+else{
+
+location.reload();
+
+}
+
+};
+  
+      
+      
+  
+/* ==========================
+   INIT
+========================== */
+
+renderCategories();
+
+renderProducts(products);
+
+updateCart();
+  
+    const startSellingBtn = document.querySelector(".secondary-btn");
+   const uploadSection = document.querySelector(".upload-section");
+   startSellingBtn.addEventListener('click',() => { 
+     uploadSection.classList.toggle('active');
+   });
+      document.getElementById("closeUpload").addEventListener('click',() =>{
+        uploadSection.classList.remove("active");
+      });
+  /** ======================
+         RENDER STORES
+  ==========================**/
+ 
+  const storesContainer = document.getElementById("stores");
+
+const stores = [
+  "All",
+  "BMW",
+  "Lewis",
+  "Markarms",
+  "Pick'n Pay",
+  "Porche"
+];
+
+function renderStores() {
+  storesContainer.innerHTML = '';
+
+  stores.forEach((store, index) => {
+    const div = document.createElement('div');
+    div.className = 'category'; // Use same class as categories for styling
+    div.textContent = store;
+
+    div.addEventListener('click', () => {
+      document.querySelectorAll('#stores .category').forEach(c => c.classList.remove('active'));
+      div.classList.add('active');
+
+      if (store === 'All') {
+        renderProducts(products);
+      } else {
+        renderProducts(products.filter(p => p.store === store));
+      }
+    });
+
+    if (index === 0) {
+      div.classList.add('active');
+    }
+
+    storesContainer.appendChild(div);
+  });
+}
+
+renderStores();
+
+// Scroll buttons functionality
+const scrollAmount = 150;
+document.getElementById('scrollLeft').addEventListener('click', () => {
+  storesContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+});
+document.getElementById('scrollRight').addEventListener('click', () => {
+  storesContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+});
+  /* RENDER PROFILE BUTTON */
+  
+  const profileBtn = document.getElementById('header-btn');
+  const profileForm = document.getElementById('profileForm');
+  const closeFormBtn = document.getElementById('closeFormBtn');
+  
+  
+  profileBtn.addEventListener('click',() =>{
+    profileForm.classList.toggle('hidden');
+  });
+  
+  closeFormBtn.addEventListener('click',() => { 
+    profileForm.classList.add('hidden');
+  });
+  
+ /**======================
+   RENDER MORE BUTTON
+======================  **/
+  
+  const nextPage = document.getElementById("next-page");
+  const menuPage = document.getElementById("menuOptions");
+
+  
+   nextPage.addEventListener('click',() => {
+     menuPage.classList.toggle('hidden');
+   });
+  
+     document.querySelectorAll('.option').forEach(option =>{
+       option.addEventListener('click', () => {
+         const nextOpt = option.getAttribute('data-next');
+         
+         if(nextOpt === "matrix-ads"){
+           document.write('here');
+         }
+         window.location.href = nextOpt;
+        
+       });
+     });
+  
+       
+      /* ==========================
+   BACKEND API INTEGRATION
+========================== */
+
+// Example: Fetch products from backend API and replace local products
+const API_BASE = 'http://127.0.0.1:4000/api';
+ // Adjust to your backend URL
+
+const fetchProductsFromAPI = async () => {
+  try {
+    const res = await fetch(`${API_BASE}/products`);
+    if (!res.ok) throw new Error('Failed to fetch products');
+    const data = await res.json();
+    if (Array.isArray(data)) {
+      products = data.map(p => ({
+        id: p.id,
+        name: p.name,
+        category: p.category,
+        price: p.price,
+        image: p.image,
+        badge: p.badge || '',
+        rating: p.rating || '5.0',
+        sales: p.sales || '0',
+        store: p.store || ''
+      }));
+      saveData();
+      renderProducts(products);
+    }
+  } catch (err) {
+    console.error(err);
+    showToast('Could not load products from server');
+  }
+};
+
+// Example: Upload product to backend API instead of localStorage
+document.getElementById('uploadForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const name = document.getElementById('productName')?.value ?? 'Unnamed Product';
+  const category = document.getElementById('productCategory').value;
+  const price = Number(document.getElementById('productPrice').value);
+  const imageInput = document.getElementById('productImage');
+  const file = imageInput.files[0];
+  if (!file) return showToast('Please upload image');
+
+  // Convert image file to base64
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  try {
+    const base64Image = await toBase64(file);
+
+    const productPayload = {
+      name,
+      category,
+      price,
+      image: base64Image,
+      badge: "🆕 New",
+      rating: "5.0",
+      sales: "0"
+    };
+
+    const res = await fetch(`${API_BASE}/products`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(productPayload)
+    });
+
+    if (!res.ok) throw new Error('Failed to upload product');
+
+    const newProduct = await res.json();
+
+    products.unshift(newProduct);
+    saveData();
+    renderProducts(products);
+    showToast('🚀 Product Uploaded');
+    e.target.reset();
+  } catch (error) {
+    console.error(error);
+    showToast('Failed to upload product');
+  }
+});
+
+// On page load, fetch products from backend API
+fetchProductsFromAPI();
+
+  
+</script>
+
+</body>
+</html>
